@@ -1,9 +1,0 @@
-c:\users\dmoreno\documents\visual studio 2015\Projects\Comercios\Dominio\bin\Debug\Dominio.dll.config
-c:\users\dmoreno\documents\visual studio 2015\Projects\Comercios\Dominio\bin\Debug\Dominio.dll
-c:\users\dmoreno\documents\visual studio 2015\Projects\Comercios\Dominio\bin\Debug\Dominio.pdb
-c:\users\dmoreno\documents\visual studio 2015\Projects\Comercios\Dominio\bin\Debug\EntityFramework.dll
-c:\users\dmoreno\documents\visual studio 2015\Projects\Comercios\Dominio\bin\Debug\EntityFramework.SqlServer.dll
-c:\users\dmoreno\documents\visual studio 2015\Projects\Comercios\Dominio\bin\Debug\EntityFramework.xml
-c:\users\dmoreno\documents\visual studio 2015\Projects\Comercios\Dominio\bin\Debug\EntityFramework.SqlServer.xml
-c:\users\dmoreno\documents\visual studio 2015\Projects\Comercios\Dominio\obj\Debug\Dominio.dll
-c:\users\dmoreno\documents\visual studio 2015\Projects\Comercios\Dominio\obj\Debug\Dominio.pdb
