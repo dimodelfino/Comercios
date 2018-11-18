@@ -32,6 +32,7 @@ namespace Comercios.Models
         [Display(Name = "Email")]
         public string email { get; set; }
 
+        //TODO: Agregar las data anotations de rol
         public string rol { get; set; }
     }
 }

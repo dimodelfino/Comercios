@@ -20,6 +20,45 @@ namespace Comercios.Controllers
             return View(db.usuarios.ToList());
         }
 
+        // GET: Usuarios
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        // POST: Usuarios/Login
+        [HttpPost]
+        public ActionResult Login(string email, string contrasena)
+        {
+            try
+            {
+                using (db)
+                {
+                    var usr = db.usuarios.SingleOrDefault
+                        (u => u.email.ToUpper() == email.ToUpper()
+                        && u.contrasena == contrasena);
+                    if (usr != null)
+                    {
+                        Session["Rol"] = usr.rol;
+                        Session["Email"] = usr.email;                        
+                        return RedirectToAction("Index", "Home");
+                    }
+                   // ModelState.AddModelError("LoginIncorrecto", "El mail o contraseña son inexistentes");
+                    return View();
+                }
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        public ActionResult Logout()
+        {
+            Session["Rol"] = null;
+            Session["Email"] = null;
+            return RedirectToAction("Index", "Home");
+        }
+
         // GET: Usuarios/Details/5
         public ActionResult Details(int? id)
         {
@@ -113,7 +152,7 @@ namespace Comercios.Controllers
             db.usuarios.Remove(usuario);
             db.SaveChanges();
             return RedirectToAction("Index");
-        }
+        }    
 
         protected override void Dispose(bool disposing)
         {
