@@ -1,0 +1,75 @@
+﻿@model Comercios.Models.Producto
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Producto</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.costo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.costo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.precioSugerido)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.precioSugerido)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tiempoPrevisto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tiempoPrevisto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.paisOrigen)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.paisOrigen)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cantidadMinima)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cantidadMinima)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

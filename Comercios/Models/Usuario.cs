@@ -20,7 +20,8 @@ namespace Comercios.Models
         public string nombre { get; set; }
 
         [StringLength(20)]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$", ErrorMessage = "La contraseña debe tener al menos 6 caracteres.")]
+        // [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,20}$", ErrorMessage = "La contraseña debe tener al menos 6 caracteres, una mayuscula, una minuscula y un digito.")]
+        [RegularExpression(@"((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*).{6,})", ErrorMessage = "La contraseña debe tener al menos 6 caracteres, una mayuscula, una minuscula y un digito.")]       
         [Required(ErrorMessage = "Debe ingresar una contraseña")]
         [DataType(DataType.Password)]
         [Display(Name = "Contraseña")]
@@ -33,6 +34,11 @@ namespace Comercios.Models
         public string email { get; set; }
 
         //TODO: Agregar las data anotations de rol
+        [Display(Name = "Rol")]
         public string rol { get; set; }
+
+        //TODO: Ver si hay que agregar data anotations de fechaRegistro
+        [Display(Name = "Fecha Registro")]
+        public DateTime fechaRegistro { get; set; }
     }
 }

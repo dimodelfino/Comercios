@@ -43,7 +43,7 @@ namespace Comercios.Controllers
                         Session["Email"] = usr.email;                        
                         return RedirectToAction("Index", "Home");
                     }
-                   // ModelState.AddModelError("LoginIncorrecto", "El mail o contraseña son inexistentes");
+                   ModelState.AddModelError("LoginIncorrecto", "El mail o contraseña no son correctos");
                     return View();
                 }
             }
@@ -85,10 +85,12 @@ namespace Comercios.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,nombre,contrasena,email,rol")] Usuario usuario)
+        public ActionResult Create([Bind(Include = "Id,nombre,contrasena,email")] Usuario usuario)
         {
             if (ModelState.IsValid)
             {
+                usuario.rol = "cliente";
+                usuario.fechaRegistro = DateTime.Now;
                 db.usuarios.Add(usuario);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -117,7 +119,7 @@ namespace Comercios.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,nombre,contrasena,email,rol")] Usuario usuario)
+        public ActionResult Edit([Bind(Include = "Id,nombre,contrasena,email")] Usuario usuario)
         {
             if (ModelState.IsValid)
             {

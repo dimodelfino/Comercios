@@ -55,3 +55,6 @@ c:\users\dmoreno\documents\visual studio 2015\Projects\Comercios\Comercios\bin\A
 c:\users\dmoreno\documents\visual studio 2015\Projects\Comercios\Comercios\bin\Newtonsoft.Json.xml
 c:\users\dmoreno\documents\visual studio 2015\Projects\Comercios\Comercios\obj\Debug\Comercios.dll
 c:\users\dmoreno\documents\visual studio 2015\Projects\Comercios\Comercios\obj\Debug\Comercios.pdb
+C:\Users\dmoreno\Documents\Visual Studio 2015\Projects\Comercios\Comercios\obj\Debug\Comercios.Migrations.InitialCreate.resources
+C:\Users\dmoreno\Documents\Visual Studio 2015\Projects\Comercios\Comercios\obj\Debug\Comercios.csproj.GenerateResource.Cache
+C:\Users\dmoreno\Documents\Visual Studio 2015\Projects\Comercios\Comercios\obj\Debug\Comercios.Migrations.FirstMigration.resources

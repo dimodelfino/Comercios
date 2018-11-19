@@ -21,7 +21,7 @@ namespace Comercios.Models
 
         [StringLength(450)]
         [Required(ErrorMessage = "Debe ingresar una descripción")]
-        [Display(Name = "Descropción")]
+        [Display(Name = "Descripción")]
         public string descripcion { get; set; }
 
         [Range(0, int.MaxValue, ErrorMessage = "Ingrese un valor positivo.")]
