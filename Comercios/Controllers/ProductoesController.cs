@@ -17,7 +17,7 @@ namespace Comercios.Controllers
         // GET: Productoes
         public ActionResult Index()
         {
-            return View(db.productos.ToList());
+            return View(db.productos.OrderBy(p => p.esFabircado).ToList());
         }
 
         // GET: Productoes/Details/5
@@ -46,8 +46,17 @@ namespace Comercios.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,nombre,descripcion,costo,precioSugerido,tiempoPrevisto,paisOrigen,cantidadMinima")] Producto producto)
+        public ActionResult Create([Bind(Include = "Id,nombre,descripcion,costo,precioSugerido,tiempoPrevisto,paisOrigen,cantidadMinima,esFabricado")] Producto producto)
         {
+            if (producto.esFabircado)
+            {
+                producto.paisOrigen = "-";
+                producto.cantidadMinima = 0;
+            }
+            else
+            {
+                producto.tiempoPrevisto = 0;
+            }                        
             if (ModelState.IsValid)
             {
                 db.productos.Add(producto);

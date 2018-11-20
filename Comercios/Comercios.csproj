@@ -170,6 +170,34 @@
     <Compile Include="Migrations\201811182321083_FirstMigration.Designer.cs">
       <DependentUpon>201811182321083_FirstMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811192113239_atributoEsFabricadoEnProductos.cs" />
+    <Compile Include="Migrations\201811192113239_atributoEsFabricadoEnProductos.Designer.cs">
+      <DependentUpon>201811192113239_atributoEsFabricadoEnProductos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811192145210_esFabricadoConDisplayNameDataAnotation.cs" />
+    <Compile Include="Migrations\201811192145210_esFabricadoConDisplayNameDataAnotation.Designer.cs">
+      <DependentUpon>201811192145210_esFabricadoConDisplayNameDataAnotation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811202008339_productFieldsNotRequired.cs" />
+    <Compile Include="Migrations\201811202008339_productFieldsNotRequired.Designer.cs">
+      <DependentUpon>201811202008339_productFieldsNotRequired.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811202059338_removedRangeAttributeFromProducto.cs" />
+    <Compile Include="Migrations\201811202059338_removedRangeAttributeFromProducto.Designer.cs">
+      <DependentUpon>201811202059338_removedRangeAttributeFromProducto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811202116449_attributesProductos.cs" />
+    <Compile Include="Migrations\201811202116449_attributesProductos.Designer.cs">
+      <DependentUpon>201811202116449_attributesProductos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811202117583_productosString.cs" />
+    <Compile Include="Migrations\201811202117583_productosString.Designer.cs">
+      <DependentUpon>201811202117583_productosString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811202118377_productosINt.cs" />
+    <Compile Include="Migrations\201811202118377_productosINt.Designer.cs">
+      <DependentUpon>201811202118377_productosINt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ComercioContext.cs" />
     <Compile Include="Models\Pedido.cs" />
@@ -246,6 +274,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811182321083_FirstMigration.resx">
       <DependentUpon>201811182321083_FirstMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811192113239_atributoEsFabricadoEnProductos.resx">
+      <DependentUpon>201811192113239_atributoEsFabricadoEnProductos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811192145210_esFabricadoConDisplayNameDataAnotation.resx">
+      <DependentUpon>201811192145210_esFabricadoConDisplayNameDataAnotation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811202008339_productFieldsNotRequired.resx">
+      <DependentUpon>201811202008339_productFieldsNotRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811202059338_removedRangeAttributeFromProducto.resx">
+      <DependentUpon>201811202059338_removedRangeAttributeFromProducto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811202116449_attributesProductos.resx">
+      <DependentUpon>201811202116449_attributesProductos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811202117583_productosString.resx">
+      <DependentUpon>201811202117583_productosString.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811202118377_productosINt.resx">
+      <DependentUpon>201811202118377_productosINt.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
