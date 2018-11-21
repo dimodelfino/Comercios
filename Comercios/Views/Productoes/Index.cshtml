@@ -10,6 +10,78 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+@using (Html.BeginForm())
+{
+    <div id="radioButtonsDiv">
+        <p>
+        <p>
+            @Html.RadioButton("Busqueda", "Codigo") Busqueda Por Codigo         
+        </p><p>
+            @Html.RadioButton("Busqueda", "Nombre") Busqueda Por Nombre  
+        </p>
+        <p>
+            @Html.RadioButton("Busqueda", "Descripcion") Busqueda Por Descripción   
+        </p><p>
+            @Html.RadioButton("Busqueda", "RangoPrecios") Busqueda Por Rango De Precios   
+        </p><p>
+            @Html.RadioButton("Busqueda", "Tipo") Busqueda Por Tipo De Producto  
+        </p>
+        </p>
+    </div>    
+    <br />
+
+    <p id="buscarCodigo">
+
+         @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+    <p id="buscarNombre">
+
+        @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+    <p id="buscarDescripcion">
+
+        @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+    <p id="buscarRango">
+
+        @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+    <p id="buscarTipo">
+
+        @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+ 
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>
+
+    $(function () {
+        $("#Busqueda").click(function () {
+            if ($(this).is(':Codigo')) {
+                $("#buscarCodigo").hide();
+            }
+            else if ($(this).is(':Nombre')){
+
+                $("#buscarNombre").hide();
+            }else if($(this).is(':Descripcion')){
+                $("#buscarDescripcion").hide();
+            
+            }else if($(this).is(':Rangoprecios')){
+                $("#buscarRango").hide();
+            } else if ($(this).is(':Tipo'))
+                $("#buscarTipo").hide();
+        });
+    });
+    </script>
+
+
+}
 <table class="table">
     <tr>
         <th>

@@ -15,9 +15,18 @@ namespace Comercios.Controllers
         private ComercioContext db = new ComercioContext();
 
         // GET: Productoes
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
-            return View(db.productos.OrderBy(p => p.esFabircado).ToList());
+            var productos = db.productos.OrderByDescending(p => p.esFabircado).ThenBy(p => p.nombre);
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                var prod = from p in db.productos select p;
+                prod = productos.Where(s => s.nombre.Contains(searchString) || s.descripcion.Contains(searchString));
+                return View(prod.ToList());
+            }
+
+            return View(productos.ToList());
         }
 
         // GET: Productoes/Details/5
@@ -51,7 +60,6 @@ namespace Comercios.Controllers
             if (producto.esFabircado)
             {
                 producto.paisOrigen = "-";
-                producto.cantidadMinima = 0;
             }
             else
             {
