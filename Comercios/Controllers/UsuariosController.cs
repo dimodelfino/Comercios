@@ -52,6 +52,7 @@ namespace Comercios.Controllers
                 return View();
             }
         }
+
         public ActionResult Logout()
         {
             Session["Rol"] = null;

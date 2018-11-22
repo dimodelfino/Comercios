@@ -14,75 +14,101 @@
 @using (Html.BeginForm())
 {
     <div id="radioButtonsDiv">
-        <p>
-        <p>
-            @Html.RadioButton("Busqueda", "Codigo") Busqueda Por Codigo         
-        </p><p>
-            @Html.RadioButton("Busqueda", "Nombre") Busqueda Por Nombre  
-        </p>
-        <p>
-            @Html.RadioButton("Busqueda", "Descripcion") Busqueda Por Descripción   
-        </p><p>
-            @Html.RadioButton("Busqueda", "RangoPrecios") Busqueda Por Rango De Precios   
-        </p><p>
-            @Html.RadioButton("Busqueda", "Tipo") Busqueda Por Tipo De Producto  
-        </p>
-        </p>
-    </div>    
+        <div id="busquedaCodigoDivRbtn" style="display: inline">
+            @Html.RadioButton("Busqueda", "Codigo") Busqueda Por Codigo
+        </div>
+        <div id="busquedaNombreDivRbtn" style="display: inline; margin-left: 4px;">
+            @Html.RadioButton("Busqueda", "Nombre") Busqueda Por Nombre
+        </div>
+        <div id="busquedaDescripcionDivRbtn" style="display: inline; margin-left: 4px;">
+            @Html.RadioButton("Busqueda", "Descripcion") Busqueda Por Descripción
+        </div>
+        <div id="busquedaRangoPreciosDivRbtn" style="display: inline; margin-left: 4px;">
+            @Html.RadioButton("Busqueda", "RangoPrecios") Busqueda Por Rango De Precios
+        </div>
+        <div id="busquedaTipoDivRbtn" style="display: inline; margin-left: 4px;">
+            @Html.RadioButton("Busqueda", "Tipo") Busqueda Por Tipo De Producto
+        </div>
+    </div>
     <br />
 
-    <p id="buscarCodigo">
+    <div>
+        <div id="buscarCodigo" hidden class="editor-field">
+            @Html.TextBox("SearchStringCodigo", null, new { @class = "form-control form-control-lg form-control-borderless", @type = "search", @placeholder = "Ingrese El Codigo Identificador Del Producto", @style = "display:inline-block" })
+            <input class="btn btn-lg btn-success" style="display:inline-block; margin-left: 10px;" type="submit" value="Buscar" />
+        </div>
 
-         @Html.TextBox("SearchString")
-        <input type="submit" value="Search" />
-    </p>
-    <p id="buscarNombre">
+        <div id="buscarNombre" hidden class="editor-field">
+            <div>
+                @Html.TextBox("SearchStringNombre", null, new { @class = "form-control form-control-lg form-control-borderless", @type = "search", @placeholder = "Ingrese El Nombre Del Producto", @style = "display:inline-block" })
+                <input class="btn btn-lg btn-success" style="display:inline-block; margin-left: 10px;" type="submit" value="Buscar" />
+            </div>
+        </div>
+        <div id="buscarDescripcion" hidden>
+            @Html.TextBox("SearchStringDescripcion", null, new { @class = "form-control form-control-lg form-control-borderless", @type = "search", @placeholder = "Ingrese La Descripción Del Producto", @style = "display:inline-block" })
+            <input class="btn btn-lg btn-success" style="display:inline-block; margin-left: 10px;" type="submit" value="Buscar" />
+        </div>
+        <div id="buscarRango" hidden>
+            @Html.TextBox("SearchStringCostoInicial", null, new { @class = "form-control form-control-lg form-control-borderless", @type = "search", @placeholder = "Ingrese El Costo Inicial", @style = "display:inline-block" })
+            @Html.TextBox("SearchStringCostoFinal", null, new { @class = "form-control form-control-lg form-control-borderless", @type = "search", @placeholder = "Ingrese El Costo Final", @style = "display:inline-block" })
+            <input class="btn btn-lg btn-success" style="display:inline-block; margin-left: 10px;" type="submit" value="Buscar" />
+        </div>
+        <div id="buscarTipo" hidden>
+            @*@Html.TextBox*@@*("SearchStringTipo", null, new { @class = "form-control form-control-lg form-control-borderless", @type = "search", @placeholder = "Ingrese El Tipo De Producto", @style = "display:inline-block" })*@            
 
-        @Html.TextBox("SearchString")
-        <input type="submit" value="Search" />
-    </p>
-    <p id="buscarDescripcion">
+            @{ List<SelectListItem> listItems = new List<SelectListItem>();
+                listItems.Add(new SelectListItem { Text = "Importado", Value = "Importado" });
+                listItems.Add(new SelectListItem { Text = "Fabricado", Value = "Fabricado" });
+            }
+            @Html.DropDownList("Tipo", listItems, "-- Seleccione el Tipo de Producto --")
+            <input class="btn btn-lg btn-success" style="display:inline-block; margin-left: 10px;" type="submit" value="Buscar" />
+        </div>
+    </div>
 
-        @Html.TextBox("SearchString")
-        <input type="submit" value="Search" />
-    </p>
-    <p id="buscarRango">
-
-        @Html.TextBox("SearchString")
-        <input type="submit" value="Search" />
-    </p>
-    <p id="buscarTipo">
-
-        @Html.TextBox("SearchString")
-        <input type="submit" value="Search" />
-    </p>
- 
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script>
-
-    $(function () {
-        $("#Busqueda").click(function () {
-            if ($(this).is(':Codigo')) {
-                $("#buscarCodigo").hide();
-            }
-            else if ($(this).is(':Nombre')){
-
-                $("#buscarNombre").hide();
-            }else if($(this).is(':Descripcion')){
-                $("#buscarDescripcion").hide();
-            
-            }else if($(this).is(':Rangoprecios')){
-                $("#buscarRango").hide();
-            } else if ($(this).is(':Tipo'))
-                $("#buscarTipo").hide();
+        $(function () {
+            $("input[name=Busqueda]").click(function () {
+                if ($(this).val() == "Codigo") {
+                    $("#buscarCodigo").show();
+                    $("#buscarNombre").hide();
+                    $("#buscarDescripcion").hide();
+                    $("#buscarRango").hide();
+                    $("#buscarTipo").hide();
+                } else if ($(this).val() == "Nombre") {
+                    $("#buscarCodigo").hide();
+                    $("#buscarNombre").show();
+                    $("#buscarDescripcion").hide();
+                    $("#buscarRango").hide();
+                    $("#buscarTipo").hide();
+                } else if ($(this).val() == "Descripcion") {
+                    $("#buscarCodigo").hide();
+                    $("#buscarNombre").hide();
+                    $("#buscarDescripcion").show();
+                    $("#buscarRango").hide();
+                    $("#buscarTipo").hide();
+                } else if ($(this).val() == "RangoPrecios") {
+                    $("#buscarCodigo").hide();
+                    $("#buscarNombre").hide();
+                    $("#buscarDescripcion").hide();
+                    $("#buscarRango").show();
+                    $("#buscarTipo").hide();
+                } else if ($(this).val() == "Tipo") {
+                    $("#buscarCodigo").hide();
+                    $("#buscarNombre").hide();
+                    $("#buscarDescripcion").hide();
+                    $("#buscarRango").hide();
+                    $("#buscarTipo").show();
+                }
+            });
         });
-    });
     </script>
 
 
-}
-<table class="table">
+                }
+<br />
+<table class="table" style="margin-top: 15px;">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.nombre)
@@ -108,35 +134,40 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.descripcion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.costo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.precioSugerido)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.tiempoPrevisto)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.paisOrigen)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.cantidadMinima)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.costo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.precioSugerido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tiempoPrevisto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.paisOrigen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cantidadMinima)
+            </td>
+            <td>
+                @if (Session["Rol"] != null && Session["Rol"].Equals("empleado"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <text> |</text>
+}                
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Carrito", "Agregar al Carrito", new { id = item.Id }) |
+                @*@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+            </td>
+        </tr>
+    }
 
 </table>

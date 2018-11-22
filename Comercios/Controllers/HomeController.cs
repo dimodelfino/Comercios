@@ -10,7 +10,11 @@ namespace Comercios.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            if (Session["Rol"] != null)
+            {
+                return View();
+            }
+            return RedirectToAction("Login", "Usuarios");
         }
 
         public ActionResult About()

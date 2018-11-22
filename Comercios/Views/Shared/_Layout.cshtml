@@ -16,15 +16,32 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Comercio", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Crear Usuario", "Create", "Usuarios")</li>
-                    <li>@Html.ActionLink("Listado Productos", "Index", "Productoes")</li>                    
+                    @if (Session["Rol"] != null && Session["Email"] != null)
+                    {
+                        <li>@Html.ActionLink("Listado Productos", "Index", "Productoes")</li>
+                        if (Session["Rol"].Equals("empleado"))
+                        {
+                            <li>@Html.ActionLink("Cargar Productos", "Create", "Usuarios")</li>
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("Carrito", "Create", "Usuarios")</li>
+                            <li>@Html.ActionLink("Ver Mis Pedidos", "Create", "Usuarios")</li>
+                        }
+                        <li>@Html.ActionLink("Log Out", "Logout", "Usuarios")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Registrarse", "Create", "Usuarios")</li>
+                    }                    
+                    @*<li>@Html.ActionLink("Home", "Index", "Home")</li>*@
+                    @*<li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@                    
+                   
                 </ul>
             </div>
         </div>

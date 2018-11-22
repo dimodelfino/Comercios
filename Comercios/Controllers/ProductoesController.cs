@@ -15,18 +15,58 @@ namespace Comercios.Controllers
         private ComercioContext db = new ComercioContext();
 
         // GET: Productoes
-        public ActionResult Index(string searchString)
+        public ActionResult Index(string SearchStringCodigo, string SearchStringNombre, string SearchStringDescripcion,
+            string SearchStringCostoInicial, string SearchStringCostoFinal, string Tipo, string Busqueda)
         {
-            var productos = db.productos.OrderByDescending(p => p.esFabircado).ThenBy(p => p.nombre);
-
-            if (!String.IsNullOrEmpty(searchString))
+            if (Session["Rol"] != null)
             {
-                var prod = from p in db.productos select p;
-                prod = productos.Where(s => s.nombre.Contains(searchString) || s.descripcion.Contains(searchString));
-                return View(prod.ToList());
-            }
+                var productos = db.productos.OrderByDescending(p => p.esFabircado).ThenBy(p => p.nombre);
 
-            return View(productos.ToList());
+                if (!String.IsNullOrEmpty(SearchStringCodigo) || !String.IsNullOrEmpty(SearchStringNombre) || !String.IsNullOrEmpty(SearchStringDescripcion)
+                     || !String.IsNullOrEmpty(SearchStringCostoInicial) || !String.IsNullOrEmpty(SearchStringCostoFinal) || !String.IsNullOrEmpty(Tipo))
+                {
+                    var prod = from p in db.productos select p;
+
+                    if (Busqueda == "Nombre")
+                    {
+                        prod = productos.Where(s => s.nombre.Contains(SearchStringNombre));
+                        return View(prod.ToList());
+                    }
+                    else if (Busqueda == "Codigo")
+                    {
+                        var searchInt = Convert.ToInt32(SearchStringCodigo);
+                        prod = productos.Where(s => s.Id.Equals(searchInt));
+                        return View(prod.ToList());
+                    }
+                    else if (Busqueda == "Descripcion")
+                    {
+                        prod = productos.Where(s => s.descripcion.Contains(SearchStringDescripcion));
+                        return View(prod.ToList());
+                    }
+                    else if (Busqueda == "RangoPrecios")
+                    {
+                        var costoInicial = Convert.ToInt32(SearchStringCostoInicial);
+                        var costoFinal = Convert.ToInt32(SearchStringCostoFinal);
+                        prod = productos.Where(s => s.costo >= costoInicial && s.costo <= costoFinal);
+                        return View(prod.ToList());
+                    }
+                    else if (Busqueda == "Tipo")
+                    {
+                        if (Tipo == "Importado")
+                        {
+                            prod = productos.Where(s => s.esFabircado.Equals(false));
+                            return View(prod.ToList());
+                        }
+                        else
+                        {
+                            prod = productos.Where(s => s.esFabircado.Equals(true));
+                            return View(prod.ToList());
+                        }
+                    }
+                }
+                return View(productos.ToList());
+            }
+            return RedirectToAction("Login", "Usuarios");            
         }
 
         // GET: Productoes/Details/5
@@ -47,7 +87,11 @@ namespace Comercios.Controllers
         // GET: Productoes/Create
         public ActionResult Create()
         {
-            return View();
+            if (Session["Rol"].Equals("empleado"))
+            {
+                return View();
+            }
+            return RedirectToAction("Index");
         }
 
         // POST: Productoes/Create
@@ -64,7 +108,7 @@ namespace Comercios.Controllers
             else
             {
                 producto.tiempoPrevisto = 0;
-            }                        
+            }
             if (ModelState.IsValid)
             {
                 db.productos.Add(producto);
@@ -78,16 +122,20 @@ namespace Comercios.Controllers
         // GET: Productoes/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (Session["Rol"].Equals("empleado"))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Producto producto = db.productos.Find(id);
+                if (producto == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(producto);
             }
-            Producto producto = db.productos.Find(id);
-            if (producto == null)
-            {
-                return HttpNotFound();
-            }
-            return View(producto);
+            return RedirectToAction("Index");
         }
 
         // POST: Productoes/Edit/5
@@ -108,7 +156,7 @@ namespace Comercios.Controllers
                 else
                 {
                     ModelState.AddModelError("costo", "El costo del producto no puede ser menor al precio sugerido ni tampoco superarlo por un 10 %");
-                }                                
+                }
             }
             return View(producto);
         }
