@@ -195,5 +195,13 @@ namespace Comercios.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public void agregarProductoAPedido(int idPedido, int idProducto)
+        {
+            //TODO
+            var pedido = db.pedidos.Find(idPedido);
+            var producto = db.productos.Find(idProducto);
+        }
+
     }
 }

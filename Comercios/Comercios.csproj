@@ -157,6 +157,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PedidoesController.cs" />
     <Compile Include="Controllers\ProductoesController.cs" />
     <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="Global.asax.cs">
@@ -198,8 +199,17 @@
     <Compile Include="Migrations\201811202118377_productosINt.Designer.cs">
       <DependentUpon>201811202118377_productosINt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201811222319562_AtributosCarritoEnusuarioPedid.cs" />
+    <Compile Include="Migrations\201811222319562_AtributosCarritoEnusuarioPedid.Designer.cs">
+      <DependentUpon>201811222319562_AtributosCarritoEnusuarioPedid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811230004144_Carrito.cs" />
+    <Compile Include="Migrations\201811230004144_Carrito.Designer.cs">
+      <DependentUpon>201811230004144_Carrito.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ComercioContext.cs" />
+    <Compile Include="Models\Item.cs" />
     <Compile Include="Models\Pedido.cs" />
     <Compile Include="Models\Producto.cs" />
     <Compile Include="Models\Usuario.cs" />
@@ -256,6 +266,11 @@
     <Content Include="Views\Productoes\Details.cshtml" />
     <Content Include="Views\Productoes\Edit.cshtml" />
     <Content Include="Views\Productoes\Index.cshtml" />
+    <Content Include="Views\Pedidoes\Create.cshtml" />
+    <Content Include="Views\Pedidoes\Delete.cshtml" />
+    <Content Include="Views\Pedidoes\Details.cshtml" />
+    <Content Include="Views\Pedidoes\Edit.cshtml" />
+    <Content Include="Views\Pedidoes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -295,6 +310,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811202118377_productosINt.resx">
       <DependentUpon>201811202118377_productosINt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811222319562_AtributosCarritoEnusuarioPedid.resx">
+      <DependentUpon>201811222319562_AtributosCarritoEnusuarioPedid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811230004144_Carrito.resx">
+      <DependentUpon>201811230004144_Carrito.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

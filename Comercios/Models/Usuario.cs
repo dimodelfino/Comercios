@@ -40,5 +40,7 @@ namespace Comercios.Models
         //TODO: Ver si hay que agregar data anotations de fechaRegistro
         [Display(Name = "Fecha Registro")]
         public DateTime fechaRegistro { get; set; }
+
+        public List<Pedido> pedidos { get; set; }
     }
 }

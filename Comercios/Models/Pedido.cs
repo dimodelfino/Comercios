@@ -14,7 +14,9 @@ namespace Comercios.Models
         [Key]
         public int Id { get; set; }
 
-        public List<Producto> productos { get; set; }
+        public List<Item> items { get; set; }
+
+        public int idUsuario { get; set; }
 
         [Required]
         [Display(Name = "Fecha Realización")]
@@ -22,10 +24,6 @@ namespace Comercios.Models
 
         [Required]
         public double total { get; set; }
-
-        [Required]
-        [Range(0, int.MaxValue)]
-        [Display(Name = "Cantidad productos")]
-        public int cantidadProductos { get; set; }
+        
     }
 }
