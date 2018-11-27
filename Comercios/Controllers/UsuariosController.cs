@@ -40,7 +40,9 @@ namespace Comercios.Controllers
                     if (usr != null)
                     {
                         Session["Rol"] = usr.rol;
-                        Session["Email"] = usr.email;                        
+                        Session["Email"] = usr.email;
+                        Session["idUsuario"] = usr.Id;
+                        Session["Pedido"] = null;                     
                         return RedirectToAction("Index", "Home");
                     }
                    ModelState.AddModelError("LoginIncorrecto", "El mail o contraseña no son correctos");

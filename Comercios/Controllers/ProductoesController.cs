@@ -196,11 +196,32 @@ namespace Comercios.Controllers
             base.Dispose(disposing);
         }
 
-        public void agregarProductoAPedido(int idPedido, int idProducto)
+        public void agregarProductoAPedido(int idProducto)
         {
             //TODO
-            var pedido = db.pedidos.Find(idPedido);
             var producto = db.productos.Find(idProducto);
+            if (Session["Pedido"]==null)
+            {
+                Pedido ped = new Pedido()
+                {
+                    fechaRealizacion = DateTime.Now,
+                    idUsuario = Convert.ToInt32(Session["idUsuario"]),
+                    total = producto.costo                                                            
+                };
+                db.pedidos.Add(ped);
+                db.SaveChanges();
+                int idPedido = ped.Id;
+                Item it = new Item()
+                {
+                    cantidad = 1,
+                    idPedido = idPedido,
+                    idProducto = producto.Id
+                };
+                ped.items.Add(it);
+                db.Entry(producto).State = EntityState.Modified;
+                db.SaveChanges();
+                Session["Pedido"] = ped;
+            }            
         }
 
     }
