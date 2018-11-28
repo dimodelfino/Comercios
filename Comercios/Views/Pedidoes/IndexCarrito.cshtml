@@ -1,0 +1,57 @@
+﻿@model Comercios.ViewModel.CarritoViewModel
+
+@{
+    ViewBag.Title = "IndexCarrito";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Mi Carrito</h2>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+
+
+
+
+<table class="table">
+    <tr>
+        <th>            
+            @Html.DisplayNameFor(model => model.item.id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.item.producto.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.item.producto.costo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.item.cantidad)
+        </th>
+        <th></th>
+    </tr>
+
+
+    @foreach (var it in Model.pedido.items) {
+    <tr>
+        <td>
+            @Html.DisplayFor(p => it.producto.Id)
+        </td>
+        <td>
+            @Html.DisplayFor(p => it.producto.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(p => it.producto.costo)
+        </td>
+        <td>
+            @Html.DisplayFor(p => it.cantidad)
+        </td>
+        <td>            
+            @Html.ActionLink("Sumar una unidad", "SumarUnProducto", new { id = it.id }) |
+            @Html.ActionLink("Quitar una unidad", "RestarUnProducto", new { id = it.id }) |
+            @Html.ActionLink("Eliminar producto", "EliminarProductoCarrito", new { id = it.producto.Id})
+        </td>
+    </tr>
+        }    
+
+</table>

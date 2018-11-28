@@ -196,17 +196,18 @@ namespace Comercios.Controllers
             base.Dispose(disposing);
         }
 
-        public void agregarProductoAPedido(int idProducto)
+        public ActionResult agregarProductoAPedido(int? id)
         {
             //TODO
-            var producto = db.productos.Find(idProducto);
+            var producto = db.productos.Find(id);
             if (Session["Pedido"]==null)
             {
                 Pedido ped = new Pedido()
                 {
                     fechaRealizacion = DateTime.Now,
                     idUsuario = Convert.ToInt32(Session["idUsuario"]),
-                    total = producto.costo                                                            
+                    total = producto.costo,       
+                    items = new List<Item> ()                                                    
                 };
 
                 //db.pedidos.Add(ped);
@@ -217,7 +218,7 @@ namespace Comercios.Controllers
                 {
                     cantidad = 1,
                     //idPedido = idPedido,
-                    idProducto = producto.Id
+                    producto = producto
                 };
 
                 ped.items.Add(it);
@@ -232,13 +233,14 @@ namespace Comercios.Controllers
                 Item it = new Item()
                 {
                     cantidad = 1,
-                    idProducto = producto.Id
+                    producto = producto
                 };
 
                 pedido.total += producto.costo;
-                pedido.items.Add(it);
+                pedido.items.Add(it);                
                 Session["Pedido"] = pedido;
             }
+            return RedirectToAction("Index");
         }
     }
 }

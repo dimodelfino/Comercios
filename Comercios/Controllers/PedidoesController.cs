@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Comercios.Models;
+using Comercios.ViewModel;
 
 namespace Comercios.Controllers
 {
@@ -18,6 +19,14 @@ namespace Comercios.Controllers
         public ActionResult Index()
         {
             return View(db.pedidos.ToList());
+        }
+
+        // GET: Pedidoes
+        public ActionResult IndexCarrito()
+        {
+            CarritoViewModel p = new CarritoViewModel();
+            p.pedido = (Pedido)Session["Pedido"];
+            return View(p);
         }
 
         // GET: Pedidoes/Details/5

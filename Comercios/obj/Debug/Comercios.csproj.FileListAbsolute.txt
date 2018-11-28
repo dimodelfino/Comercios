@@ -67,3 +67,4 @@ C:\Users\dmoreno\Documents\Visual Studio 2015\Projects\Comercios\Comercios\obj\D
 C:\Users\dmoreno\Documents\Visual Studio 2015\Projects\Comercios\Comercios\obj\Debug\Comercios.Migrations.productosINt.resources
 C:\Users\dmoreno\Documents\Visual Studio 2015\Projects\Comercios\Comercios\obj\Debug\Comercios.Migrations.AtributosCarritoEnusuarioPedid.resources
 C:\Users\dmoreno\Documents\Visual Studio 2015\Projects\Comercios\Comercios\obj\Debug\Comercios.Migrations.Carrito.resources
+C:\Users\dmoreno\Documents\Visual Studio 2015\Projects\Comercios\Comercios\obj\Debug\Comercios.Migrations.pedidosConItems.resources
