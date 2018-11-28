@@ -208,21 +208,37 @@ namespace Comercios.Controllers
                     idUsuario = Convert.ToInt32(Session["idUsuario"]),
                     total = producto.costo                                                            
                 };
-                db.pedidos.Add(ped);
-                db.SaveChanges();
-                int idPedido = ped.Id;
+
+                //db.pedidos.Add(ped);
+                //db.SaveChanges();
+
+                //int idPedido = ped.Id;
                 Item it = new Item()
                 {
                     cantidad = 1,
-                    idPedido = idPedido,
+                    //idPedido = idPedido,
                     idProducto = producto.Id
                 };
-                ped.items.Add(it);
-                db.Entry(producto).State = EntityState.Modified;
-                db.SaveChanges();
-                Session["Pedido"] = ped;
-            }            
-        }
 
+                ped.items.Add(it);
+                //db.Entry(producto).State = EntityState.Modified;
+                //db.SaveChanges();
+                Session["Pedido"] = ped;
+            }
+            else{
+
+                Pedido pedido = (Pedido)Session["Pedido"];
+
+                Item it = new Item()
+                {
+                    cantidad = 1,
+                    idProducto = producto.Id
+                };
+
+                pedido.total += producto.costo;
+                pedido.items.Add(it);
+                Session["Pedido"] = pedido;
+            }
+        }
     }
 }

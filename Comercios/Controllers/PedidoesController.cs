@@ -124,5 +124,36 @@ namespace Comercios.Controllers
             base.Dispose(disposing);
         }
 
+        public bool confirmarPedido()
+        {
+            bool confirmado = false;
+            if (Session["Pedido"] == null)
+            {
+                return confirmado;
+            }
+            else
+            {
+                Pedido pedido = (Pedido)Session["Pedido"];
+                List<Item> auxItems = pedido.items;
+
+                pedido.items = null;
+                db.pedidos.Add(pedido);
+                db.SaveChanges();
+
+                foreach (Item it in auxItems)
+                {
+                    it.idPedido = pedido.Id;
+                }
+
+                pedido.items = auxItems;
+                db.Entry(auxItems).State = EntityState.Modified;
+                db.SaveChanges();
+                Session["Pedido"] = null;
+
+                confirmado = true;
+                return confirmado;
+            }
+        }
+
     }
 }
