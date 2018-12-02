@@ -7,13 +7,13 @@ namespace Comercios.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class esFabricadoConDisplayNameDataAnotation : IMigrationMetadata
+    public sealed partial class RangeProducto : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(esFabricadoConDisplayNameDataAnotation));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(RangeProducto));
         
         string IMigrationMetadata.Id
         {
-            get { return "201811192145210_esFabricadoConDisplayNameDataAnotation"; }
+            get { return "201812020315095_RangeProducto"; }
         }
         
         string IMigrationMetadata.Source

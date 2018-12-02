@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -27,30 +28,30 @@ namespace Comercios.Controllers
                 {
                     var prod = from p in db.productos select p;
 
-                    if (Busqueda == "Nombre")
+                    if (Busqueda == "Nombre" && !String.IsNullOrEmpty(SearchStringNombre))
                     {
                         prod = productos.Where(s => s.nombre.Contains(SearchStringNombre));
                         return View(prod.ToList());
                     }
-                    else if (Busqueda == "Codigo")
+                    else if (Busqueda == "Codigo" && !String.IsNullOrEmpty(SearchStringCodigo))
                     {
                         var searchInt = Convert.ToInt32(SearchStringCodigo);
                         prod = productos.Where(s => s.Id.Equals(searchInt));
                         return View(prod.ToList());
                     }
-                    else if (Busqueda == "Descripcion")
+                    else if (Busqueda == "Descripcion" && !String.IsNullOrEmpty(SearchStringDescripcion))
                     {
                         prod = productos.Where(s => s.descripcion.Contains(SearchStringDescripcion));
                         return View(prod.ToList());
                     }
-                    else if (Busqueda == "RangoPrecios")
+                    else if (Busqueda == "RangoPrecios" && !String.IsNullOrEmpty(SearchStringCostoInicial) && !String.IsNullOrEmpty(SearchStringCostoFinal))
                     {
                         var costoInicial = Convert.ToInt32(SearchStringCostoInicial);
                         var costoFinal = Convert.ToInt32(SearchStringCostoFinal);
                         prod = productos.Where(s => s.costo >= costoInicial && s.costo <= costoFinal);
                         return View(prod.ToList());
                     }
-                    else if (Busqueda == "Tipo")
+                    else if (Busqueda == "Tipo" && !String.IsNullOrEmpty(Tipo))
                     {
                         if (Tipo == "Importado")
                         {
@@ -66,7 +67,7 @@ namespace Comercios.Controllers
                 }
                 return View(productos.ToList());
             }
-            return RedirectToAction("Login", "Usuarios");            
+            return RedirectToAction("Login", "Usuarios");
         }
 
         // GET: Productoes/Details/5
@@ -198,49 +199,99 @@ namespace Comercios.Controllers
 
         public ActionResult agregarProductoAPedido(int? id)
         {
-            //TODO
             var producto = db.productos.Find(id);
-            if (Session["Pedido"]==null)
+            int idUsuario = idUsuario = Convert.ToInt32(Session["idUsuario"]);
+            if (Session["Pedido"] == null)
             {
                 Pedido ped = new Pedido()
                 {
-                    fechaRealizacion = DateTime.Now,
-                    idUsuario = Convert.ToInt32(Session["idUsuario"]),
-                    total = producto.costo,       
-                    items = new List<Item> ()                                                    
+                    items = new List<Item>()
                 };
 
-                //db.pedidos.Add(ped);
-                //db.SaveChanges();
-
-                //int idPedido = ped.Id;
                 Item it = new Item()
                 {
                     cantidad = 1,
-                    //idPedido = idPedido,
-                    producto = producto
+                    producto = producto,
+                    costoItem = producto.costo
                 };
 
                 ped.items.Add(it);
-                //db.Entry(producto).State = EntityState.Modified;
-                //db.SaveChanges();
                 Session["Pedido"] = ped;
             }
-            else{
-
+            else
+            {
                 Pedido pedido = (Pedido)Session["Pedido"];
 
                 Item it = new Item()
                 {
                     cantidad = 1,
-                    producto = producto
+                    producto = producto,
+                    costoItem = producto.costo
                 };
 
-                pedido.total += producto.costo;
-                pedido.items.Add(it);                
+                pedido.items.Add(it);
                 Session["Pedido"] = pedido;
             }
             return RedirectToAction("Index");
+        }
+
+        public ActionResult CargarProductos()
+        {
+            if (Session["Rol"] != null && Session["Rol"].Equals("empleado"))
+            {
+                if (db.productos.ToString() == "")
+                {
+                    CargarPorductos();
+                }
+                else
+                {
+                    ViewBag.mensaje = "Los prodcutos ya fueron cargados al sistema";
+                }
+                return RedirectToAction("Index", "Home");
+            }
+            return RedirectToAction("Index");
+        }
+
+        public void CargarPorductos()
+        {
+            if (Session["Rol"] != null && Session["Rol"].Equals("empleado"))
+            {
+                List<String> listaTemp = new List<String>();
+                string ruta = HttpRuntime.AppDomainAppPath + @"ArchivoProd\ListadoProductos.txt";                
+                StreamReader sr = new StreamReader(ruta);
+                string linea = null;
+                linea = sr.ReadLine();
+
+                while ((linea != null))
+                {
+                    listaTemp.Add(linea);
+                    linea = sr.ReadLine();
+                }
+
+                for (int i = 0; i < listaTemp.Count; i++)
+                {
+                    string cadena = listaTemp[i];
+                    string[] vec1 = cadena.Split('|');
+                    List<Producto> listaProductos = new List<Producto>();
+
+                    if (vec1 != null)
+                    {
+                        Producto p = new Producto();
+
+                        p.nombre = vec1[0].ToString();
+                        p.descripcion = vec1[1].ToString();
+                        p.costo = double.Parse(vec1[2]);
+                        p.precioSugerido = double.Parse(vec1[3]);
+                        p.esFabircado = bool.Parse(vec1[4]);
+                        if (vec1[5] != "*") p.tiempoPrevisto = int.Parse(vec1[5]);
+                        if (vec1[6] != "*") p.paisOrigen = vec1[6].ToString();
+                        if (vec1[7] != "*") p.cantidadMinima = int.Parse(vec1[7]);
+                        db.productos.Add(p);
+                        db.SaveChanges();
+                        ViewBag.mensaje = "Los productos se han cargado exitosamente!";
+                    }
+                }
+            }
         }
     }
 }

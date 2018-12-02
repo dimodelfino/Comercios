@@ -1,0 +1,4 @@
+Fabricado 1|Fabricado|123|125|True|12|*|*|
+Importado 1|Importado|245|246|False|*|China|23|
+Fabricado 2|Fabricado|345|346|True|34|*|*|
+Importado 2|Importado|325|326|False|*|USA|23|

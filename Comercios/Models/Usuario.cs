@@ -41,6 +41,6 @@ namespace Comercios.Models
         [Display(Name = "Fecha Registro")]
         public DateTime fechaRegistro { get; set; }
 
-        public List<Pedido> pedidos { get; set; }
+        public List<Pedido> pedidos { get; set; } = new List<Pedido>();
     }
 }

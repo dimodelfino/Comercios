@@ -54,7 +54,7 @@
             <input class="btn btn-lg btn-success" style="display:inline-block; margin-left: 10px;" type="submit" value="Buscar" />
         </div>
         <div id="buscarTipo" hidden>
-            @*@Html.TextBox*@@*("SearchStringTipo", null, new { @class = "form-control form-control-lg form-control-borderless", @type = "search", @placeholder = "Ingrese El Tipo De Producto", @style = "display:inline-block" })*@            
+            @*@Html.TextBox*@@*("SearchStringTipo", null, new { @class = "form-control form-control-lg form-control-borderless", @type = "search", @placeholder = "Ingrese El Tipo De Producto", @style = "display:inline-block" })*@
 
             @{ List<SelectListItem> listItems = new List<SelectListItem>();
                 listItems.Add(new SelectListItem { Text = "Importado", Value = "Importado" });
@@ -147,22 +147,46 @@
                 @Html.DisplayFor(modelItem => item.costo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.precioSugerido)
+                @if (!item.precioSugerido.ToString().IsEmpty())
+                {
+                    @Html.DisplayFor(modelItem => item.precioSugerido)
+                }else
+                {
+                    <p>--</p>;
+                }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.tiempoPrevisto)
+                @if (!item.tiempoPrevisto.ToString().IsEmpty() || item.tiempoPrevisto != null)
+                {
+                    @Html.DisplayFor(modelItem => item.tiempoPrevisto)
+                }else
+                {
+                    <p>--</p>;
+                }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.paisOrigen)
+                @if (!item.paisOrigen.IsEmpty() || item.paisOrigen != null)
+                {
+                    @Html.DisplayFor(modelItem => item.paisOrigen)
+                }else
+                {
+                    <p>--</p>;
+                }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.cantidadMinima)
+                @if (!item.cantidadMinima.ToString().IsEmpty() || item.cantidadMinima != null)
+                {
+                    @Html.DisplayFor(modelItem => item.cantidadMinima)
+                }else
+                {
+                    <p>--</p>;
+                }
             </td>
             <td>
                 @if (Session["Rol"] != null && Session["Rol"].Equals("empleado"))
                 {
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <text> |</text>
-}                
+                }
                 @Html.ActionLink("Details", "Details", new { id = item.Id }) |
                 @Html.ActionLink("Agregar a carrito", "agregarProductoAPedido", new { id = item.Id }) |
                 @*@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@

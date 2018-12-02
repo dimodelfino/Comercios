@@ -10,7 +10,6 @@ namespace Comercios.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "Comercios.Models.ComercioContext";
         }
 
         protected override void Seed(Comercios.Models.ComercioContext context)

@@ -12,8 +12,8 @@
 </p>*@
 
 
-
-
+@if (Model.pedido != null && Model.pedido.items != null && Model.pedido.items.Count != 0)
+{
 <table class="table">
     <tr>
         <th>            
@@ -23,7 +23,7 @@
             @Html.DisplayNameFor(model => model.item.producto.nombre)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.item.producto.costo)
+            @Html.DisplayNameFor(model => model.item.costoItem)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.item.cantidad)
@@ -41,17 +41,24 @@
             @Html.DisplayFor(p => it.producto.nombre)
         </td>
         <td>
-            @Html.DisplayFor(p => it.producto.costo)
+            @Html.DisplayFor(p => it.costoItem)
         </td>
         <td>
             @Html.DisplayFor(p => it.cantidad)
         </td>
         <td>            
-            @Html.ActionLink("Sumar una unidad", "SumarUnProducto", new { id = it.id }) |
-            @Html.ActionLink("Quitar una unidad", "RestarUnProducto", new { id = it.id }) |
+            @Html.ActionLink("Sumar una unidad", "SumarUnProducto", new { id = it.producto.Id }) |
+            @Html.ActionLink("Quitar una unidad", "RestarUnProducto", new { id = it.producto.Id }) |
             @Html.ActionLink("Eliminar producto", "EliminarProductoCarrito", new { id = it.producto.Id})
         </td>
     </tr>
         }    
-
 </table>
+
+    @*<input type="button" value="Confirmar Pedido" onclick="confirmarPedido"/>*@
+    @Html.ActionLink("Confirmar Pedido", "confirmarPedido", "Pedidoes")
+}
+else if(Model.pedido == null)
+{
+    <h3>El carrito no tiene productos. A comprar!!</h3>
+}

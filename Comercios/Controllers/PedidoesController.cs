@@ -18,15 +18,36 @@ namespace Comercios.Controllers
         // GET: Pedidoes
         public ActionResult Index()
         {
-            return View(db.pedidos.ToList());
+            if (Session["Rol"] != null)
+            {
+                int idUsuario = Convert.ToInt32(Session["idUsuario"]);
+                return View(db.pedidos.Where(p => p.usuario.Id == idUsuario).ToList());
+            }
+            return RedirectToAction("Login", "Usuarios");
+        }
+
+        // GET: Pedidoes
+        public ActionResult ProductosPedido(int id)
+        {
+            if (Session["Rol"] != null)
+            {
+                CarritoViewModel c = new CarritoViewModel();
+                c.pedido = db.pedidos.Where(p => p.Id == id).Include(p => p.items.Select(i => i.producto)).SingleOrDefault();
+                return View(c);
+            }
+            return RedirectToAction("Login", "Usuarios");
         }
 
         // GET: Pedidoes
         public ActionResult IndexCarrito()
         {
-            CarritoViewModel p = new CarritoViewModel();
-            p.pedido = (Pedido)Session["Pedido"];
-            return View(p);
+            if (Session["Rol"] != null)
+            {
+                CarritoViewModel p = new CarritoViewModel();
+                p.pedido = (Pedido)Session["Pedido"];
+                return View(p);
+            }
+            return RedirectToAction("Login", "Usuarios");
         }
 
         // GET: Pedidoes/Details/5
@@ -133,35 +154,81 @@ namespace Comercios.Controllers
             base.Dispose(disposing);
         }
 
-        public bool confirmarPedido()
+        public ActionResult confirmarPedido()
         {
-            bool confirmado = false;
-            if (Session["Pedido"] == null)
+            int idUsuario = Convert.ToInt32(Session["idUsuario"]);
+            Usuario usu = db.usuarios.Find(idUsuario);
+            Pedido pedido = (Pedido)Session["Pedido"];
+            pedido.usuario = usu;
+            pedido.fechaRealizacion = DateTime.Now;
+
+            foreach (Item it in pedido.items)
             {
-                return confirmado;
+                pedido.total += it.costoItem;
+            }
+
+            db.pedidos.Add(pedido);
+
+            foreach (Item it in pedido.items)
+            {
+                db.Entry(it.producto).State = EntityState.Unchanged;
+            }
+
+            db.SaveChanges();
+
+            Session["Pedido"] = null;
+            return RedirectToAction("IndexCarrito");
+        }
+
+
+        public ActionResult SumarUnProducto(int id)
+        {
+            Pedido p = (Pedido)Session["Pedido"];
+            Item it = p.items.Find(i => i.producto.Id == id);
+
+            it.cantidad++;
+            it.costoItem = it.producto.costo * it.cantidad;
+            var index = p.items.IndexOf(it);
+
+            if (index != -1)
+            {
+                p.items[index] = it;
+            }
+
+            Session["Pedido"] = p;
+            return RedirectToAction("IndexCarrito");
+        }
+
+        public ActionResult RestarUnProducto(int id)
+        {
+            Pedido p = (Pedido)Session["Pedido"];
+            Item it = p.items.Find(i => i.producto.Id == id);
+
+            if (it.cantidad - 1 == 0)
+            {
+                p.items.Remove(it);
             }
             else
             {
-                Pedido pedido = (Pedido)Session["Pedido"];
-                List<Item> auxItems = pedido.items;
+                it.cantidad--;
+                it.costoItem = it.producto.costo * it.cantidad;
+                var index = p.items.IndexOf(it);
 
-                pedido.items = null;
-                db.pedidos.Add(pedido);
-                db.SaveChanges();
-
-                foreach (Item it in auxItems)
-                {
-                    it.idPedido = pedido.Id;
-                }
-
-                pedido.items = auxItems;
-                db.Entry(auxItems).State = EntityState.Modified;
-                db.SaveChanges();
-                Session["Pedido"] = null;
-
-                confirmado = true;
-                return confirmado;
+                if (index != -1)
+                    p.items[index] = it;
             }
+
+            Session["Pedido"] = p;
+            return RedirectToAction("IndexCarrito");
+        }
+
+        public ActionResult EliminarProductoCarrito(int id)
+        {
+            Pedido p = (Pedido)Session["Pedido"];
+            Item it = p.items.Find(i => i.producto.Id == id);
+            p.items.Remove(it);
+            Session["Pedido"] = p;
+            return RedirectToAction("IndexCarrito");
         }
 
     }

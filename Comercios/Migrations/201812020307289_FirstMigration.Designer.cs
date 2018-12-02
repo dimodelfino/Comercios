@@ -7,13 +7,13 @@ namespace Comercios.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class productFieldsNotRequired : IMigrationMetadata
+    public sealed partial class FirstMigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(productFieldsNotRequired));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(FirstMigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "201811202008339_productFieldsNotRequired"; }
+            get { return "201812020307289_FirstMigration"; }
         }
         
         string IMigrationMetadata.Source

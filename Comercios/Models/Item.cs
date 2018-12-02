@@ -15,15 +15,16 @@ namespace Comercios.Models
         public int id { get; set; }
 
         [Display(Name = "Producto")]
-        public Producto producto { get; set;}
-
-        public int idPedido { get; set; }
+        public Producto producto { get; set;}       
 
         [Display(Name = "Unidades Pedidas")]
         public int cantidad { get; set; }
 
-        [Display(Name = "Fecha de Compra del Producto")]
-        public DateTime fechaProductoAgregado { get; set; }
+        [Display(Name = "Costo Total")]
+        public double costoItem { get; set; } 
+
+        //[Display(Name = "Fecha de Compra del Producto")]
+        //public DateTime fechaProductoAgregado { get; set; }
 
     }
 }

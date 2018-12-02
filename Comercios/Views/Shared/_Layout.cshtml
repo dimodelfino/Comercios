@@ -25,22 +25,20 @@
                         <li>@Html.ActionLink("Listado Productos", "Index", "Productoes")</li>
                         if (Session["Rol"].Equals("empleado"))
                         {
-                            <li>@Html.ActionLink("Cargar Productos", "Create", "Usuarios")</li>
+                            <li>@Html.ActionLink("Cargar Productos", "CargarProductos", "Productoes")</li>
                         }
                         else
                         {
                             <li>@Html.ActionLink("Carrito", "IndexCarrito", "Pedidoes")</li>
                             <li>@Html.ActionLink("Ver Mis Pedidos", "Index", "Pedidoes")</li>
                         }                        
-                            <li>@Html.ActionLink("Log Out", "Logout", "Usuarios")</li>                        
+                            <li>@Html.ActionLink("Log Out", "Logout", "Usuarios")</li>
                     }
                     else
-                    {
+                    {                        
                         <li>@Html.ActionLink("Registrarse", "Create", "Usuarios")</li>
-                    }                    
-                    @*<li>@Html.ActionLink("Home", "Index", "Home")</li>*@
-                    @*<li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@                                       
+                        <li>@Html.ActionLink("Ingresar", "Login", "Usuarios")</li>
+                    }                                                       
                 </ul>
             </div>
         </div>

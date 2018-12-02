@@ -34,17 +34,17 @@ namespace Comercios.Models
         [Display(Name = "Precio sugerido")]
         public double precioSugerido { get; set; }
 
-        public Pedido pedido { get; set; }
+        //public Pedido pedido { get; set; }
 
         [Display(Name = "Producto Fabricado")]
         public bool esFabircado { get; set; }
-      //public string tipo { get; set; }
+        //public string tipo { get; set; }
 
         //FABRICADO
                 
         [Range(0, int.MaxValue, ErrorMessage = "Ingrese un valor positivo.")]
         [Display(Name = "Tiempo prevísto")]
-        public int tiempoPrevisto { get; set; }
+        public int? tiempoPrevisto { get; set; }
         //IMPORRTADOS
         
         [StringLength(80)]
@@ -53,6 +53,6 @@ namespace Comercios.Models
         
         [Range(0, int.MaxValue, ErrorMessage = "Ingrese un valor positivo.")]
         [Display(Name = "Cantidad mínima")]
-        public int cantidadMinima { get; set; }
+        public int? cantidadMinima { get; set; }
     }
 }

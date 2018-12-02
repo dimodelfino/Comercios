@@ -163,53 +163,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201811032109449_InitialCreate.cs" />
-    <Compile Include="Migrations\201811032109449_InitialCreate.Designer.cs">
-      <DependentUpon>201811032109449_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201812020307289_FirstMigration.cs" />
+    <Compile Include="Migrations\201812020307289_FirstMigration.Designer.cs">
+      <DependentUpon>201812020307289_FirstMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201811182321083_FirstMigration.cs" />
-    <Compile Include="Migrations\201811182321083_FirstMigration.Designer.cs">
-      <DependentUpon>201811182321083_FirstMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201811192113239_atributoEsFabricadoEnProductos.cs" />
-    <Compile Include="Migrations\201811192113239_atributoEsFabricadoEnProductos.Designer.cs">
-      <DependentUpon>201811192113239_atributoEsFabricadoEnProductos.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201811192145210_esFabricadoConDisplayNameDataAnotation.cs" />
-    <Compile Include="Migrations\201811192145210_esFabricadoConDisplayNameDataAnotation.Designer.cs">
-      <DependentUpon>201811192145210_esFabricadoConDisplayNameDataAnotation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201811202008339_productFieldsNotRequired.cs" />
-    <Compile Include="Migrations\201811202008339_productFieldsNotRequired.Designer.cs">
-      <DependentUpon>201811202008339_productFieldsNotRequired.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201811202059338_removedRangeAttributeFromProducto.cs" />
-    <Compile Include="Migrations\201811202059338_removedRangeAttributeFromProducto.Designer.cs">
-      <DependentUpon>201811202059338_removedRangeAttributeFromProducto.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201811202116449_attributesProductos.cs" />
-    <Compile Include="Migrations\201811202116449_attributesProductos.Designer.cs">
-      <DependentUpon>201811202116449_attributesProductos.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201811202117583_productosString.cs" />
-    <Compile Include="Migrations\201811202117583_productosString.Designer.cs">
-      <DependentUpon>201811202117583_productosString.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201811202118377_productosINt.cs" />
-    <Compile Include="Migrations\201811202118377_productosINt.Designer.cs">
-      <DependentUpon>201811202118377_productosINt.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201811222319562_AtributosCarritoEnusuarioPedid.cs" />
-    <Compile Include="Migrations\201811222319562_AtributosCarritoEnusuarioPedid.Designer.cs">
-      <DependentUpon>201811222319562_AtributosCarritoEnusuarioPedid.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201811230004144_Carrito.cs" />
-    <Compile Include="Migrations\201811230004144_Carrito.Designer.cs">
-      <DependentUpon>201811230004144_Carrito.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201811282255265_pedidosConItems.cs" />
-    <Compile Include="Migrations\201811282255265_pedidosConItems.Designer.cs">
-      <DependentUpon>201811282255265_pedidosConItems.cs</DependentUpon>
+    <Compile Include="Migrations\201812020315095_RangeProducto.cs" />
+    <Compile Include="Migrations\201812020315095_RangeProducto.Designer.cs">
+      <DependentUpon>201812020315095_RangeProducto.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ComercioContext.cs" />
@@ -277,6 +237,7 @@
     <Content Include="Views\Pedidoes\Edit.cshtml" />
     <Content Include="Views\Pedidoes\Index.cshtml" />
     <Content Include="Views\Pedidoes\IndexCarrito.cshtml" />
+    <Content Include="Views\Pedidoes\ProductosPedido.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -290,41 +251,11 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201811032109449_InitialCreate.resx">
-      <DependentUpon>201811032109449_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201812020307289_FirstMigration.resx">
+      <DependentUpon>201812020307289_FirstMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811182321083_FirstMigration.resx">
-      <DependentUpon>201811182321083_FirstMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811192113239_atributoEsFabricadoEnProductos.resx">
-      <DependentUpon>201811192113239_atributoEsFabricadoEnProductos.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811192145210_esFabricadoConDisplayNameDataAnotation.resx">
-      <DependentUpon>201811192145210_esFabricadoConDisplayNameDataAnotation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811202008339_productFieldsNotRequired.resx">
-      <DependentUpon>201811202008339_productFieldsNotRequired.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811202059338_removedRangeAttributeFromProducto.resx">
-      <DependentUpon>201811202059338_removedRangeAttributeFromProducto.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811202116449_attributesProductos.resx">
-      <DependentUpon>201811202116449_attributesProductos.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811202117583_productosString.resx">
-      <DependentUpon>201811202117583_productosString.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811202118377_productosINt.resx">
-      <DependentUpon>201811202118377_productosINt.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811222319562_AtributosCarritoEnusuarioPedid.resx">
-      <DependentUpon>201811222319562_AtributosCarritoEnusuarioPedid.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811230004144_Carrito.resx">
-      <DependentUpon>201811230004144_Carrito.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201811282255265_pedidosConItems.resx">
-      <DependentUpon>201811282255265_pedidosConItems.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201812020315095_RangeProducto.resx">
+      <DependentUpon>201812020315095_RangeProducto.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

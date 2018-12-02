@@ -15,14 +15,15 @@ namespace Comercios.Models
         public int Id { get; set; }
 
         public List<Item> items { get; set; }
-
-        public int idUsuario { get; set; }
+        
+        public Usuario usuario { get; set; }
 
         [Required]
         [Display(Name = "Fecha Realización")]
         public DateTime fechaRealizacion { get; set; }
 
         [Required]
+        [Display(Name = "Total")]
         public double total { get; set; }
         
     }
