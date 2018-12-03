@@ -1,12 +1,12 @@
-Fabricado 1|Fabricado|123|125|True|12|*|*|
-Importado 1|Importado|245|246|False|*|China|23|
-Fabricado 2|Fabricado|345|346|True|34|*|*|
-Importado 2|Importado|325|326|False|*|USA|23|
-Fabricado 3|Fabricado|35|37|True|28|*|*|
-Importado 3|Importado|535|537|False|*|Tailandia|500|
-Fabricado 4|Fabricado|532|534|True|24|*|*|
-Importado 4|Importado|452|454|False|*|Australia|2300|
-Fabricado 5|Fabricado|555|557|True|42|*|*|
-Importado 5|Importado|245|246|False|*|Zimbawe|322|
-Fabricado 6|Fabricado|123|125|True|12|*|*|
-Importado 6|Importado|442|443|False|*|Francia|6788|
+Notebook|Fabricado|123|125|True|12|*|*|
+Celular|Importado|245|246|False|*|China|23|
+Mp3|Fabricado|345|346|True|34|*|*|
+Pendrive|Importado|325|326|False|*|USA|23|
+Router|Fabricado|35|37|True|28|*|*|
+Chromecast|Importado|535|537|False|*|Tailandia|500|
+Television|Fabricado|532|534|True|24|*|*|
+Teclado|Importado|452|454|False|*|Australia|2300|
+Mouse|Fabricado|555|557|True|42|*|*|
+Monitor|Importado|245|246|False|*|Zimbawe|322|
+Fuente|Fabricado|123|125|True|12|*|*|
+Mother|Importado|442|443|False|*|Francia|6788|
