@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Detalle</h2>
 
 <div>
     <h4>Pedido</h4>
@@ -28,8 +28,7 @@
         </dd>        
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index") |
+<p>    
+    @Html.ActionLink("Lista de Pedidos", "Index") |
     @Html.ActionLink("Ver Productos del pedido", "ProductosPedido", new { id = Model.Id })
 </p>

@@ -19,16 +19,22 @@ namespace Comercios.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            if (Session["Rol"] != null)
+            {
+                ViewBag.Message = "Your application description page.";
+                return View();
+            }
+            return RedirectToAction("Login", "Usuarios");
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            if (Session["Rol"] != null)
+            {
+                ViewBag.Message = "Your contact page.";
+                return View();
+            }
+            return RedirectToAction("Login", "Usuarios");
         }
     }
 }

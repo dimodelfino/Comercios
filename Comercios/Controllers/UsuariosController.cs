@@ -17,7 +17,11 @@ namespace Comercios.Controllers
         // GET: Usuarios
         public ActionResult Index()
         {
-            return View(db.usuarios.ToList());
+            if (Session["idUsuario"] != null && Session["Rol"].ToString() != "Admin")
+            {
+                return View(db.usuarios.ToList());
+            }
+            return RedirectToAction("Login");
         }
 
         // GET: Usuarios
@@ -42,10 +46,10 @@ namespace Comercios.Controllers
                         Session["Rol"] = usr.rol;
                         Session["Email"] = usr.email;
                         Session["idUsuario"] = usr.Id;
-                        Session["Pedido"] = null;                     
+                        Session["Pedido"] = null;
                         return RedirectToAction("Index", "Home");
                     }
-                   ModelState.AddModelError("LoginIncorrecto", "El mail o contraseña no son correctos");
+                    ModelState.AddModelError("LoginIncorrecto", "El mail o contraseña no son correctos");
                     return View();
                 }
             }
@@ -65,16 +69,20 @@ namespace Comercios.Controllers
         // GET: Usuarios/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (Session["idUsuario"] != null && Session["Rol"].ToString() != "Admin")
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Usuario usuario = db.usuarios.Find(id);
+                if (usuario == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(usuario);
             }
-            Usuario usuario = db.usuarios.Find(id);
-            if (usuario == null)
-            {
-                return HttpNotFound();
-            }
-            return View(usuario);
+            return RedirectToAction("Login");
         }
 
         // GET: Usuarios/Create
@@ -96,25 +104,32 @@ namespace Comercios.Controllers
                 usuario.fechaRegistro = DateTime.Now;
                 db.usuarios.Add(usuario);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                Session["Rol"] = usuario.rol;
+                Session["Email"] = usuario.email;
+                Session["idUsuario"] = usuario.Id;
+                Session["Pedido"] = null;
+                return RedirectToAction("Index", "Home");
             }
-
             return View(usuario);
         }
 
         // GET: Usuarios/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (Session["idUsuario"] != null && Session["Rol"].ToString() != "Admin")
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Usuario usuario = db.usuarios.Find(id);
+                if (usuario == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(usuario);
             }
-            Usuario usuario = db.usuarios.Find(id);
-            if (usuario == null)
-            {
-                return HttpNotFound();
-            }
-            return View(usuario);
+            return RedirectToAction("Login");
         }
 
         // POST: Usuarios/Edit/5
@@ -124,28 +139,36 @@ namespace Comercios.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,nombre,contrasena,email")] Usuario usuario)
         {
-            if (ModelState.IsValid)
+            if (Session["idUsuario"] != null && Session["Rol"].ToString() != "Admin")
             {
-                db.Entry(usuario).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(usuario).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(usuario);
             }
-            return View(usuario);
+            return RedirectToAction("Login");
         }
 
         // GET: Usuarios/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (Session["idUsuario"] != null && Session["Rol"].ToString() != "Admin")
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Usuario usuario = db.usuarios.Find(id);
+                if (usuario == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(usuario);
             }
-            Usuario usuario = db.usuarios.Find(id);
-            if (usuario == null)
-            {
-                return HttpNotFound();
-            }
-            return View(usuario);
+            return RedirectToAction("Login");
         }
 
         // POST: Usuarios/Delete/5
@@ -157,7 +180,7 @@ namespace Comercios.Controllers
             db.usuarios.Remove(usuario);
             db.SaveChanges();
             return RedirectToAction("Index");
-        }    
+        }
 
         protected override void Dispose(bool disposing)
         {

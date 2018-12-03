@@ -7,10 +7,6 @@
 
 <h2>Mi Carrito</h2>
 
-@*<p>
-    @Html.ActionLink("Create New", "Create")
-</p>*@
-
 
 @if (Model.pedido != null && Model.pedido.items != null && Model.pedido.items.Count != 0)
 {
@@ -54,8 +50,7 @@
     </tr>
         }    
 </table>
-
-    @*<input type="button" value="Confirmar Pedido" onclick="confirmarPedido"/>*@
+    
     @Html.ActionLink("Confirmar Pedido", "confirmarPedido", "Pedidoes")
 }
 else if(Model.pedido == null)

@@ -21,7 +21,16 @@ namespace Comercios.Controllers
             if (Session["Rol"] != null)
             {
                 int idUsuario = Convert.ToInt32(Session["idUsuario"]);
-                return View(db.pedidos.Where(p => p.usuario.Id == idUsuario).ToList());
+                List<Pedido> pedidos = db.pedidos.Where(p => p.usuario.Id == idUsuario).ToList();
+                if (pedidos.Count != 0)
+                {
+                    return View(pedidos);
+                }
+                else
+                {
+                    ViewBag.message = "No hay pedidos para mostrar!";
+                    return View(pedidos);
+                }
             }
             return RedirectToAction("Login", "Usuarios");
         }
@@ -29,7 +38,7 @@ namespace Comercios.Controllers
         // GET: Pedidoes
         public ActionResult ProductosPedido(int id)
         {
-            if (Session["Rol"] != null)
+            if (Session["Rol"] != null && Session["Rol"].Equals("cliente"))
             {
                 CarritoViewModel c = new CarritoViewModel();
                 c.pedido = db.pedidos.Where(p => p.Id == id).Include(p => p.items.Select(i => i.producto)).SingleOrDefault();
@@ -41,7 +50,7 @@ namespace Comercios.Controllers
         // GET: Pedidoes
         public ActionResult IndexCarrito()
         {
-            if (Session["Rol"] != null)
+            if (Session["Rol"] != null && Session["Rol"].Equals("cliente"))
             {
                 CarritoViewModel p = new CarritoViewModel();
                 p.pedido = (Pedido)Session["Pedido"];
@@ -53,22 +62,30 @@ namespace Comercios.Controllers
         // GET: Pedidoes/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (Session["Rol"] != null && Session["Rol"].Equals("cliente"))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Pedido pedido = db.pedidos.Find(id);
+                if (pedido == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(pedido);
             }
-            Pedido pedido = db.pedidos.Find(id);
-            if (pedido == null)
-            {
-                return HttpNotFound();
-            }
-            return View(pedido);
+            return RedirectToAction("Login", "Usuarios");
         }
 
         // GET: Pedidoes/Create
         public ActionResult Create()
         {
-            return View();
+            if (Session["Rol"] != null && Session["Rol"].Equals("Admin"))
+            {
+                return View();
+            }
+            return RedirectToAction("Login", "Usuarios");
         }
 
         // POST: Pedidoes/Create
@@ -78,29 +95,37 @@ namespace Comercios.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,fechaRealizacion,total,cantidadProductos")] Pedido pedido)
         {
-            if (ModelState.IsValid)
+            if (Session["Rol"] != null && Session["Rol"].Equals("Admin"))
             {
-                db.pedidos.Add(pedido);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                if (ModelState.IsValid)
+                {
+                    db.pedidos.Add(pedido);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
 
-            return View(pedido);
+                return View(pedido);
+            }
+            return RedirectToAction("Login", "Usuarios");
         }
 
         // GET: Pedidoes/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (Session["Rol"] != null && Session["Rol"].Equals("Admin"))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Pedido pedido = db.pedidos.Find(id);
+                if (pedido == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(pedido);
             }
-            Pedido pedido = db.pedidos.Find(id);
-            if (pedido == null)
-            {
-                return HttpNotFound();
-            }
-            return View(pedido);
+            return RedirectToAction("Login", "Usuarios");
         }
 
         // POST: Pedidoes/Edit/5
@@ -122,16 +147,20 @@ namespace Comercios.Controllers
         // GET: Pedidoes/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (Session["Rol"] != null && Session["Rol"].Equals("Admin"))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Pedido pedido = db.pedidos.Find(id);
+                if (pedido == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(pedido);
             }
-            Pedido pedido = db.pedidos.Find(id);
-            if (pedido == null)
-            {
-                return HttpNotFound();
-            }
-            return View(pedido);
+            return RedirectToAction("Login", "Usuarios");
         }
 
         // POST: Pedidoes/Delete/5
@@ -156,28 +185,32 @@ namespace Comercios.Controllers
 
         public ActionResult confirmarPedido()
         {
-            int idUsuario = Convert.ToInt32(Session["idUsuario"]);
-            Usuario usu = db.usuarios.Find(idUsuario);
-            Pedido pedido = (Pedido)Session["Pedido"];
-            pedido.usuario = usu;
-            pedido.fechaRealizacion = DateTime.Now;
-
-            foreach (Item it in pedido.items)
+            if (Session["Rol"] != null && Session["Rol"].Equals("cliente"))
             {
-                pedido.total += it.costoItem;
+                int idUsuario = Convert.ToInt32(Session["idUsuario"]);
+                Usuario usu = db.usuarios.Find(idUsuario);
+                Pedido pedido = (Pedido)Session["Pedido"];
+                pedido.usuario = usu;
+                pedido.fechaRealizacion = DateTime.Now;
+
+                foreach (Item it in pedido.items)
+                {
+                    pedido.total += it.costoItem;
+                }
+
+                db.pedidos.Add(pedido);
+
+                foreach (Item it in pedido.items)
+                {
+                    db.Entry(it.producto).State = EntityState.Unchanged;
+                }
+
+                db.SaveChanges();
+
+                Session["Pedido"] = null;
+                return RedirectToAction("IndexCarrito");
             }
-
-            db.pedidos.Add(pedido);
-
-            foreach (Item it in pedido.items)
-            {
-                db.Entry(it.producto).State = EntityState.Unchanged;
-            }
-
-            db.SaveChanges();
-
-            Session["Pedido"] = null;
-            return RedirectToAction("IndexCarrito");
+            return RedirectToAction("Login", "Usuarios");
         }
 
 

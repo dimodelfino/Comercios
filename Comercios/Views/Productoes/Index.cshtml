@@ -5,12 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
+<h2>Listado de Productos</h2>
+<br />
 @using (Html.BeginForm())
 {
     <div id="radioButtonsDiv">
@@ -156,7 +152,7 @@
                 }
             </td>
             <td>
-                @if (!item.tiempoPrevisto.ToString().IsEmpty() || item.tiempoPrevisto != null)
+                @if (item.tiempoPrevisto != null || !item.tiempoPrevisto.ToString().IsEmpty())
                 {
                     @Html.DisplayFor(modelItem => item.tiempoPrevisto)
                 }else
@@ -165,7 +161,7 @@
                 }
             </td>
             <td>
-                @if (!item.paisOrigen.IsEmpty() || item.paisOrigen != null)
+                @if (item.paisOrigen != null || !item.paisOrigen.IsEmpty())
                 {
                     @Html.DisplayFor(modelItem => item.paisOrigen)
                 }else
@@ -174,7 +170,7 @@
                 }
             </td>
             <td>
-                @if (!item.cantidadMinima.ToString().IsEmpty() || item.cantidadMinima != null)
+                @if (item.cantidadMinima != null || !item.cantidadMinima.ToString().IsEmpty())
                 {
                     @Html.DisplayFor(modelItem => item.cantidadMinima)
                 }else
@@ -185,11 +181,13 @@
             <td>
                 @if (Session["Rol"] != null && Session["Rol"].Equals("empleado"))
                 {
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <text> |</text>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.Id }) <text> |</text>
                 }
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Agregar a carrito", "agregarProductoAPedido", new { id = item.Id }) |
-                @*@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+                else
+                {
+                    @Html.ActionLink("Agregar a carrito", "agregarProductoAPedido", new { id = item.Id }) <text> |</text>
+}
+                @Html.ActionLink("Detalle", "Details", new { id = item.Id })                             
             </td>
         </tr>
     }

@@ -73,22 +73,26 @@ namespace Comercios.Controllers
         // GET: Productoes/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (Session["Rol"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Producto producto = db.productos.Find(id);
+                if (producto == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(producto);
             }
-            Producto producto = db.productos.Find(id);
-            if (producto == null)
-            {
-                return HttpNotFound();
-            }
-            return View(producto);
+            return RedirectToAction("Login", "Usuarios");
         }
 
         // GET: Productoes/Create
         public ActionResult Create()
         {
-            if (Session["Rol"].Equals("empleado"))
+            if (Session["Rol"].Equals("Admin"))
             {
                 return View();
             }
@@ -123,7 +127,7 @@ namespace Comercios.Controllers
         // GET: Productoes/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (Session["Rol"].Equals("empleado"))
+            if (Session["Rol"] != null && Session["Rol"].Equals("empleado"))
             {
                 if (id == null)
                 {
@@ -144,12 +148,14 @@ namespace Comercios.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,nombre,descripcion,costo,precioSugerido,tiempoPrevisto,paisOrigen,cantidadMinima")] Producto producto)
+        public ActionResult Edit([Bind(Include = "Id,nombre,descripcion,costo,precioSugerido,esFabircado,tiempoPrevisto,paisOrigen,cantidadMinima")] Producto producto)
         {
             if (ModelState.IsValid)
             {
                 if (producto.costo <= producto.precioSugerido * 1.10 && producto.costo >= producto.precioSugerido)
                 {
+                    //Producto p = (Producto)db.productos.Find(producto.Id);
+                    //producto.esFabircado = p.esFabircado;
                     db.Entry(producto).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -165,16 +171,20 @@ namespace Comercios.Controllers
         // GET: Productoes/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            if (Session["Rol"].Equals("Admin"))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Producto producto = db.productos.Find(id);
+                if (producto == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(producto);
             }
-            Producto producto = db.productos.Find(id);
-            if (producto == null)
-            {
-                return HttpNotFound();
-            }
-            return View(producto);
+            return RedirectToAction("Index");
         }
 
         // POST: Productoes/Delete/5
@@ -199,47 +209,67 @@ namespace Comercios.Controllers
 
         public ActionResult agregarProductoAPedido(int? id)
         {
-            var producto = db.productos.Find(id);
-            int idUsuario = idUsuario = Convert.ToInt32(Session["idUsuario"]);
-            if (Session["Pedido"] == null)
+            if (Session["Rol"] != null && Session["Rol"].Equals("cliente"))
             {
-                Pedido ped = new Pedido()
+                var producto = db.productos.Find(id);
+                int idUsuario = idUsuario = Convert.ToInt32(Session["idUsuario"]);
+                if (Session["Pedido"] == null)
                 {
-                    items = new List<Item>()
-                };
+                    Pedido ped = new Pedido()
+                    {
+                        items = new List<Item>()
+                    };
 
-                Item it = new Item()
+                    Item it = new Item()
+                    {
+                        cantidad = 1,
+                        producto = producto,
+                        costoItem = producto.costo
+                    };
+
+                    ped.items.Add(it);
+                    Session["Pedido"] = ped;
+                }
+                else
                 {
-                    cantidad = 1,
-                    producto = producto,
-                    costoItem = producto.costo
-                };
-
-                ped.items.Add(it);
-                Session["Pedido"] = ped;
+                    Pedido pedido = (Pedido)Session["Pedido"];
+                    bool existe = false;
+                    int index = -1;
+                    foreach (Item itm in pedido.items)
+                    {
+                        if (itm.producto.Id == producto.Id)
+                        {
+                            existe = true;
+                            index = pedido.items.IndexOf(itm);
+                        }
+                    }
+                    if (existe)
+                    {
+                        pedido.items[index].cantidad++;
+                        pedido.items[index].costoItem = producto.costo * pedido.items[index].cantidad;
+                    }
+                    else
+                    {
+                        Item it = new Item()
+                        {
+                            cantidad = 1,
+                            producto = producto,
+                            costoItem = producto.costo
+                        };
+                        pedido.items.Add(it);
+                    }
+                    Session["Pedido"] = pedido;
+                }
+                return RedirectToAction("Index");
             }
-            else
-            {
-                Pedido pedido = (Pedido)Session["Pedido"];
-
-                Item it = new Item()
-                {
-                    cantidad = 1,
-                    producto = producto,
-                    costoItem = producto.costo
-                };
-
-                pedido.items.Add(it);
-                Session["Pedido"] = pedido;
-            }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult CargarProductos()
         {
             if (Session["Rol"] != null && Session["Rol"].Equals("empleado"))
             {
-                if (db.productos.ToString() == "")
+                if (db.productos.Count() == 0)
                 {
                     CargarPorductos();
                 }
@@ -249,7 +279,7 @@ namespace Comercios.Controllers
                 }
                 return RedirectToAction("Index", "Home");
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Home");
         }
 
         public void CargarPorductos()
@@ -257,7 +287,7 @@ namespace Comercios.Controllers
             if (Session["Rol"] != null && Session["Rol"].Equals("empleado"))
             {
                 List<String> listaTemp = new List<String>();
-                string ruta = HttpRuntime.AppDomainAppPath + @"ArchivoProd\ListadoProductos.txt";                
+                string ruta = HttpRuntime.AppDomainAppPath + @"Archivos\ListadoProductos.txt";
                 StreamReader sr = new StreamReader(ruta);
                 string linea = null;
                 linea = sr.ReadLine();
@@ -280,7 +310,7 @@ namespace Comercios.Controllers
 
                         p.nombre = vec1[0].ToString();
                         p.descripcion = vec1[1].ToString();
-                        p.costo = double.Parse(vec1[2]);
+                        p.costo = double.Parse(vec1[3]);
                         p.precioSugerido = double.Parse(vec1[3]);
                         p.esFabircado = bool.Parse(vec1[4]);
                         if (vec1[5] != "*") p.tiempoPrevisto = int.Parse(vec1[5]);
@@ -288,9 +318,9 @@ namespace Comercios.Controllers
                         if (vec1[7] != "*") p.cantidadMinima = int.Parse(vec1[7]);
                         db.productos.Add(p);
                         db.SaveChanges();
-                        ViewBag.mensaje = "Los productos se han cargado exitosamente!";
                     }
                 }
+                ViewBag.mensaje = "Los productos se han cargado exitosamente!";
             }
         }
     }

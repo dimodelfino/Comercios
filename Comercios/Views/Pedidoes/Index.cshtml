@@ -5,11 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Lista de Pedidos</h2>
 
-@*<p>
-    @Html.ActionLink("Create New", "Create")
-</p>*@
+@if (Model.ToList().Count != 0)
+{
 <table class="table">
     <tr>
         <th>
@@ -38,3 +37,9 @@
 }
 
 </table>
+}
+else
+{
+    @Html.Label("", (string)ViewBag.Message)
+
+}
