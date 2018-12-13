@@ -171,6 +171,10 @@
     <Compile Include="Migrations\201812020315095_RangeProducto.Designer.cs">
       <DependentUpon>201812020315095_RangeProducto.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812112246173_defensaTelefono.cs" />
+    <Compile Include="Migrations\201812112246173_defensaTelefono.Designer.cs">
+      <DependentUpon>201812112246173_defensaTelefono.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ComercioContext.cs" />
     <Compile Include="Models\Item.cs" />
@@ -256,6 +260,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812020315095_RangeProducto.resx">
       <DependentUpon>201812020315095_RangeProducto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812112246173_defensaTelefono.resx">
+      <DependentUpon>201812112246173_defensaTelefono.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

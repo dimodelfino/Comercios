@@ -58,3 +58,4 @@ c:\users\dmoreno\documents\visual studio 2015\Projects\Comercios\Comercios\obj\D
 C:\Users\dmoreno\Documents\Visual Studio 2015\Projects\Comercios\Comercios\obj\Debug\Comercios.Migrations.FirstMigration.resources
 C:\Users\dmoreno\Documents\Visual Studio 2015\Projects\Comercios\Comercios\obj\Debug\Comercios.csproj.GenerateResource.Cache
 C:\Users\dmoreno\Documents\Visual Studio 2015\Projects\Comercios\Comercios\obj\Debug\Comercios.Migrations.RangeProducto.resources
+C:\Users\dmoreno\Documents\Visual Studio 2015\Projects\Comercios\Comercios\obj\Debug\Comercios.Migrations.defensaTelefono.resources

@@ -42,5 +42,9 @@ namespace Comercios.Models
         public DateTime fechaRegistro { get; set; }
 
         public List<Pedido> pedidos { get; set; } = new List<Pedido>();
+
+        [Required(ErrorMessage = "Debe ingresar un telefono")]
+        [Display(Name = "Telefono")]
+        public string telefono { get; set; }
     }
 }

@@ -96,7 +96,7 @@ namespace Comercios.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,nombre,contrasena,email")] Usuario usuario)
+        public ActionResult Create([Bind(Include = "Id,nombre,contrasena,email,telefono")] Usuario usuario)
         {
             if (ModelState.IsValid)
             {
